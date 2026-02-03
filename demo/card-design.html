@@ -5,26 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scriptia 卡片设计系统 - 简洁白灰版</title>
   <style>
-    * {
+    /* ============================================
+       1. CSS Reset & Base Styles
+       ============================================ */
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
-      min-height: 100vh;
-      color: #212529;
-      padding: 40px 20px;
+    :root {
+      /* 主题色 - 四种卡片类型 */
+      --ip-color: #e8590c;
+      --scene-color: #2f9e44;
+      --plot-color: #1971c2;
+      --meme-color: #be4bdb;
+
+      /* 中性色 */
+      --primary: #495057;
+      --primary-light: #adb5bd;
+
+      /* 背景色 */
+      --bg-page: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+      --bg-dark: #f1f3f5;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8f9fa;
+
+      /* 边框色 */
+      --border: #dee2e6;
+      --border-light: #ced4da;
+
+      /* 文字色 */
+      --text-primary: #212529;
+      --text-secondary: #495057;
+      --text-muted: #868e96;
+
+      /* 阴影 */
+      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+      --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.6);
+      --shadow-message: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+      /* 圆角 */
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 10px;
+      --radius-xl: 12px;
+      --radius-2xl: 16px;
+      --radius-3xl: 20px;
+
+      /* 尺寸 */
+      --card-width: 200px;
+      --card-height: 300px;
     }
 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-page);
+      min-height: 100vh;
+      color: var(--text-primary);
+      padding: 40px 20px;
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       2. Layout & Typography
+       ============================================ */
     .container {
       max-width: 1400px;
       margin: 0 auto;
     }
 
-    h1 {
+    .page-title {
       text-align: center;
       font-size: 32px;
       margin-bottom: 8px;
@@ -34,32 +85,14 @@
       background-clip: text;
     }
 
-    .subtitle {
+    .page-subtitle {
       text-align: center;
-      color: #6c757d;
+      color: var(--text-muted);
       margin-bottom: 48px;
       font-size: 14px;
     }
 
-    /* 偏白色系定义 */
-    :root {
-      --ip-color: #e8590c;
-      --scene-color: #2f9e44;
-      --plot-color: #1971c2;
-      --meme-color: #be4bdb;
-      --primary: #495057;
-      --primary-light: #adb5bd;
-      --bg-dark: #f1f3f5;
-      --bg-card: #ffffff;
-      --bg-card-hover: #f8f9fa;
-      --border: #dee2e6;
-      --border-light: #ced4da;
-      --text-primary: #212529;
-      --text-secondary: #495057;
-      --text-muted: #868e96;
-    }
-
-    /* 区块标题 */
+    /* 区块 */
     .section {
       margin-bottom: 48px;
     }
@@ -80,81 +113,32 @@
       margin-bottom: 20px;
     }
 
-    /* 卡片展示区 */
-    .card-showcase {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      align-items: flex-start;
-    }
+    /* ============================================
+       3. Components - Buttons
+       ============================================ */
 
-    /* ========== 统一翻转卡片容器 ========== */
-    .card-flip-container {
-      width: 200px;
-      height: 300px;
-      perspective: 1000px;
-    }
-
-    .card-flip-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-
-    .card-flip-container.flipped .card-flip-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-flip-front,
-    .card-flip-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-flip-back {
-      transform: rotateY(180deg);
-    }
-
-    /* 右上角控制按钮组 */
-    .card-controls {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 6px;
-      z-index: 100;
-    }
-
-    .card-flip-back .card-controls,
-    .card-scene-back .card-controls {
-      z-index: 100;
-    }
-
-    /* ========== 统一按钮基础样式 - Laper风格 ========== */
+    /* 基础按钮 */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
       border: none;
       outline: none;
-      letter-spacing: 0.2px;
+      white-space: nowrap;
     }
 
-    /* 主要按钮 - 深灰 */
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    /* 主要按钮 */
     .btn-primary {
       background: #2d3436;
       color: #ffffff;
@@ -164,12 +148,7 @@
       background: #636e72;
     }
 
-    .btn-primary:active {
-      background: #2d3436;
-      transform: scale(0.98);
-    }
-
-    /* 次要按钮 - 浅灰 */
+    /* 次要按钮 */
     .btn-secondary {
       background: #f1f3f4;
       color: #5f6368;
@@ -180,17 +159,46 @@
       color: #3c4043;
     }
 
-    .btn-secondary:active {
-      background: #dadce0;
+    /* 小号按钮（用于展开区域） */
+    .btn-text {
+      height: 26px;
+      padding: 0 10px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-text.btn-secondary {
+      background: #f1f3f4;
+      color: #5f6368;
+    }
+
+    .btn-text.btn-secondary:hover {
+      background: #e8eaed;
+      color: #3c4043;
+    }
+
+    .btn-text.btn-primary {
+      background: #2d3436;
+      color: #ffffff;
+    }
+
+    .btn-text.btn-primary:hover {
+      background: #636e72;
+    }
+
+    .btn-text:active {
       transform: scale(0.98);
     }
 
-    /* 控制按钮 - 用于卡片右上角 */
-    /* 控制按钮 - 卡片右上角 */
+    /* 控制按钮（卡片右上角） */
     .control-btn {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -213,13 +221,159 @@
       transform: scale(0.95);
     }
 
-    /* ========== 9:16 人物卡 ========== */
-    .card-flip-front .image-area {
+    /* 关闭按钮 */
+    .close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: #f1f3f4;
+      border: none;
+      color: #5f6368;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: #e8eaed;
+      color: #3c4043;
+    }
+
+    .close-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* 展开/收起按钮 */
+    .expand-btn {
+      height: 32px;
+      padding: 0 14px;
+      background: #f1f3f4;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-weight: 500;
+      color: #5f6368;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .expand-btn:hover {
+      background: #e8eaed;
+      color: #3c4043;
+    }
+
+    .expand-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* ============================================
+       4. Components - Flip Card Base
+       ============================================ */
+
+    /* 控制按钮组 */
+    .card-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 6px;
+      z-index: 100;
+    }
+
+    /* 底部渐变遮罩 */
+    .content-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px 14px 14px;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    }
+
+    /* 剧中场景遮罩 */
+    .scene-context-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 12px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+    }
+
+    .scene-context-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #adb5bd;
+      margin-bottom: 4px;
+    }
+
+    .scene-context-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.4;
+    }
+
+    /* ============================================
+       5. Components - 9:16 Character Card
+       ============================================ */
+
+    /* 容器 */
+    .card-flip-container {
+      width: var(--card-width);
+      height: var(--card-height);
+      perspective: 1000px;
+    }
+
+    .card-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card-flip-container.flipped .card-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* 正反面通用 */
+    .card-flip-front,
+    .card-flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-flip-back {
+      transform: rotateY(180deg);
+    }
+
+    /* 层级控制 */
+    .card-flip-container.flipped .card-flip-back {
+      z-index: 10;
+    }
+
+    .card-flip-container.flipped .card-flip-front {
+      z-index: 0;
+    }
+
+    /* 图片区域 */
+    .card-flip-front .image-area,
+    .card-flip-back .image-area {
       width: 100%;
       height: 100%;
       position: relative;
     }
 
+    /* 类型标签 */
     .card-flip-front .type-badge {
       position: absolute;
       top: 10px;
@@ -234,15 +388,7 @@
       z-index: 5;
     }
 
-    .content-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 60px 14px 14px;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-    }
-
+    /* 卡片信息 */
     .card-name {
       font-size: 16px;
       font-weight: 700;
@@ -272,10 +418,13 @@
       color: rgba(255, 255, 255, 0.95);
     }
 
-    /* ========== 16:9 场景卡（支持翻转） ========== */
+    /* ============================================
+       6. Components - 16:9 Scene Card
+       ============================================ */
+
     .card-scene-wrapper {
-      width: 200px;
-      height: 300px;
+      width: var(--card-width);
+      height: var(--card-height);
       perspective: 1000px;
     }
 
@@ -297,9 +446,9 @@
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      border-radius: 16px;
+      border-radius: var(--radius-2xl);
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      box-shadow: var(--shadow-card);
       background: var(--bg-card);
       border: 1px solid var(--border);
     }
@@ -308,6 +457,15 @@
       transform: rotateY(180deg);
     }
 
+    .card-scene-wrapper.flipped .card-scene-back {
+      z-index: 10;
+    }
+
+    .card-scene-wrapper.flipped .card-scene-front {
+      z-index: 0;
+    }
+
+    /* 正面 - 图片区域 */
     .card-scene-front .image-area {
       width: 100%;
       height: 112px;
@@ -326,6 +484,7 @@
       z-index: 5;
     }
 
+    /* 正面 - 内容区域 */
     .card-scene-front .content-area {
       padding: 12px;
       height: 188px;
@@ -359,65 +518,70 @@
       gap: 8px;
     }
 
-    /* 16:9 卡片背面 - 剧中场景图 */
+    /* 背面 - 剧中场景图 */
     .card-scene-back .scene-image-full {
       width: 100%;
       height: 100%;
       position: relative;
     }
 
-    .scene-context-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 40px 12px 12px;
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+    /* ============================================
+       7. Components - Collapsed Card
+       ============================================ */
+
+    .card-collapsed-wrapper {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      width: fit-content;
+      min-width: 320px;
+      overflow: hidden;
     }
 
-    .scene-context-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: #adb5bd;
-      margin-bottom: 4px;
+    .card-collapsed-wrapper.expanded {
+      border-color: var(--border-light);
     }
 
-    .scene-context-desc {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.4;
-    }
-
-    /* ========== 折叠样式 ========== */
+    /* 折叠状态 */
     .card-collapsed {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 10px 14px;
       background: var(--bg-card);
-      border-radius: 10px;
-      border: 1px solid var(--border);
       cursor: pointer;
       transition: all 0.2s;
-      width: fit-content;
-      min-width: 320px;
+      width: 100%;
     }
 
     .card-collapsed:hover {
       background: var(--bg-card-hover);
-      border-color: var(--border-light);
     }
 
+    .card-collapsed-wrapper .card-collapsed {
+      border: none;
+      border-radius: 0;
+      min-width: auto;
+    }
+
+    .card-collapsed-wrapper.expanded .card-collapsed {
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* 迷你图标 */
     .card-collapsed .mini-icon {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 16px;
     }
 
+    /* 迷你信息 */
     .card-collapsed .mini-info {
       flex: 1;
       min-width: 0;
@@ -437,33 +601,69 @@
       color: var(--text-muted);
     }
 
-    .card-collapsed .expand-btn {
-      height: 32px;
-      padding: 0 14px;
-      background: #f1f3f4;
-      border: none;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 500;
-      color: #5f6368;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
+    /* 展开区域 */
+    .card-collapsed-expand {
+      padding: 12px 14px;
+      background: var(--bg-dark);
+      display: none;
     }
 
-    .card-collapsed .expand-btn:hover {
-      background: #e8eaed;
-      color: #3c4043;
+    .card-collapsed-wrapper.expanded .card-collapsed-expand {
+      display: block;
     }
 
-    .card-collapsed .expand-btn:active {
-      transform: scale(0.98);
+    /* 展开内容 */
+    .expand-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    /* ========== 输入框引用样式 ========== */
+    .expand-field {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .expand-field-label {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .expand-field-value {
+      color: var(--text-secondary);
+    }
+
+    .expand-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .expand-tag {
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .expand-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    /* ============================================
+       8. Components - Input Reference
+       ============================================ */
+
     .input-area {
       background: var(--bg-dark);
-      border-radius: 12px;
+      border-radius: var(--radius-xl);
       padding: 16px;
       border: 1px solid var(--border);
       margin-bottom: 24px;
@@ -481,7 +681,6 @@
       gap: 6px;
       padding: 6px 12px;
       background: #f1f3f4;
-      border: none;
       border-radius: 20px;
       font-size: 12px;
       color: #5f6368;
@@ -510,7 +709,10 @@
       color: #5f6368;
     }
 
-    /* ========== 对话消息样式 ========== */
+    /* ============================================
+       9. Components - Chat Message
+       ============================================ */
+
     .chat-message {
       display: flex;
       gap: 12px;
@@ -540,12 +742,13 @@
       margin-bottom: 4px;
     }
 
+    /* 消息卡片 */
     .message-card {
       background: var(--bg-card);
-      border-radius: 12px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-message);
     }
 
     .message-card-header {
@@ -559,7 +762,7 @@
     .message-card-header .type-icon {
       width: 24px;
       height: 24px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -578,88 +781,57 @@
       gap: 6px;
     }
 
-    /* ========== 统一按钮样式 ========== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: none;
-      outline: none;
-      white-space: nowrap;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    /* 次要按钮 - 浅灰色 */
-    .btn-secondary {
-      background: #f1f3f4;
-      color: #5f6368;
-    }
-
-    .btn-secondary:hover {
-      background: #e8eaed;
-      color: #3c4043;
-    }
-
-    /* 主要按钮 - 深灰色 */
-    .btn-primary {
-      background: #2d3436;
-      color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      background: #636e72;
-    }
-
-    /* 应用于各个容器 */
-    .card-actions,
-    .modal-actions,
-    .message-card-footer {
-      display: flex;
-      gap: 8px;
-    }
-
-    .card-actions button,
-    .modal-actions button:not(.close-btn),
-    .message-card-footer button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: none;
-      outline: none;
-      white-space: nowrap;
-    }
-
-    .card-actions button:active,
-    .modal-actions button:not(.close-btn):active,
-    .message-card-footer button:active {
-      transform: scale(0.98);
-    }
-
     .message-card-body {
       padding: 12px;
     }
 
-    .message-card-body .desc {
+    .message-card-layout {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .message-card-layout .layout-image {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    /* 图片比例 */
+    .message-card-layout .layout-image.ratio-1-1 {
+      width: 80px;
+      height: 80px;
+    }
+
+    .message-card-layout .layout-image.ratio-9-16 {
+      width: 80px;
+      height: 142px;
+    }
+
+    .message-card-layout .layout-image.ratio-16-9 {
+      width: 142px;
+      height: 80px;
+    }
+
+    .message-card-layout .layout-text {
+      flex: 1;
       font-size: 13px;
       line-height: 1.5;
       color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+    }
+
+    .message-card-bottom {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
     }
 
     .message-card-footer {
@@ -669,15 +841,18 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ========== 弹窗样式 ========== */
+    /* ============================================
+       10. Components - Modal
+       ============================================ */
+
     .modal-content {
       background: var(--bg-dark);
-      border-radius: 20px;
+      border-radius: var(--radius-3xl);
       width: 90%;
       max-width: 720px;
       max-height: 90vh;
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      box-shadow: var(--shadow-modal);
       border: 1px solid var(--border);
     }
 
@@ -711,6 +886,7 @@
       padding: 20px;
     }
 
+    /* 左侧图片区 */
     .modal-image-area {
       display: flex;
       flex-direction: column;
@@ -720,7 +896,7 @@
     .modal-image-wrapper {
       width: 200px;
       height: 356px;
-      border-radius: 12px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
       position: relative;
       border: 1px solid var(--border);
@@ -729,7 +905,7 @@
     .prompt-box {
       padding: 10px;
       background: var(--bg-card);
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
     }
 
@@ -751,7 +927,6 @@
       outline: none;
     }
 
-    /* 生成图片按钮 - 与主要按钮一致 */
     .generate-btn {
       display: inline-flex;
       align-items: center;
@@ -762,7 +937,7 @@
       padding: 0 16px;
       background: #2d3436;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       color: #ffffff;
       font-size: 13px;
       font-weight: 500;
@@ -778,6 +953,7 @@
       transform: scale(0.98);
     }
 
+    /* 右侧信息区 */
     .modal-info-area {
       display: flex;
       flex-direction: column;
@@ -787,7 +963,7 @@
     .info-section {
       padding: 14px;
       background: var(--bg-card);
-      border-radius: 12px;
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border);
     }
 
@@ -806,7 +982,7 @@
 
     .info-section .editable-field {
       padding: 8px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       border: 1px solid transparent;
       transition: all 0.2s;
       cursor: text;
@@ -843,14 +1019,14 @@
       gap: 10px;
       padding: 12px;
       background: var(--bg-dark);
-      border-radius: 10px;
+      border-radius: var(--radius-lg);
       border: 1px solid var(--border);
     }
 
     .type-info-card .type-icon {
       width: 40px;
       height: 40px;
-      border-radius: 10px;
+      border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -877,7 +1053,7 @@
     .field-box {
       padding: 10px;
       background: var(--bg-dark);
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       border: 1px solid var(--border);
     }
 
@@ -893,6 +1069,7 @@
       color: var(--text-primary);
     }
 
+    /* 标签区域 */
     .tags-area {
       display: flex;
       flex-wrap: wrap;
@@ -957,18 +1134,26 @@
       transform: scale(0.95);
     }
 
-    /* 类型颜色 - 偏白灰色调 */
+    /* ============================================
+       11. Utilities - Type Colors
+       ============================================ */
+
+    /* 类型标签色 */
     .type-ip { background: rgba(232, 89, 12, 0.12); color: #c2410c; }
     .type-scene { background: rgba(47, 158, 68, 0.12); color: #2f9e44; }
     .type-plot { background: rgba(25, 113, 194, 0.12); color: #1971c2; }
     .type-meme { background: rgba(190, 75, 219, 0.12); color: #be4bdb; }
 
+    /* 类型背景色 */
     .bg-ip { background: linear-gradient(135deg, #e8590c, #c2410c); }
     .bg-scene { background: linear-gradient(135deg, #2f9e44, #2b8a3e); }
     .bg-plot { background: linear-gradient(135deg, #1971c2, #1864ab); }
     .bg-meme { background: linear-gradient(135deg, #be4bdb, #9c36b5); }
 
-    /* 模拟图片 - 偏白灰色调背景 */
+    /* ============================================
+       12. Utilities - Placeholder Images
+       ============================================ */
+
     .placeholder-img {
       width: 100%;
       height: 100%;
@@ -983,44 +1168,34 @@
     .placeholder-img.scene { background: linear-gradient(135deg, #2f9e44, #2b8a3e); }
     .placeholder-img.plot { background: linear-gradient(135deg, #1971c2, #1864ab); }
     .placeholder-img.meme { background: linear-gradient(135deg, #be4bdb, #9c36b5); }
-
-    /* 剧中场景图样式 */
     .placeholder-img.scene-context {
       background: linear-gradient(135deg, #495057, #343a40);
       font-size: 60px;
     }
 
-    /* 关闭按钮 - 与次要按钮一致 */
-    .close-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: #f1f3f4;
-      border: none;
-      color: #5f6368;
-      cursor: pointer;
+    /* ============================================
+       13. Utilities - Demo Helpers
+       ============================================ */
+
+    .card-showcase {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      transition: all 0.2s ease;
-    }
-
-    .close-btn:hover {
-      background: #e8eaed;
-      color: #3c4043;
-    }
-
-    .close-btn:active {
-      transform: scale(0.98);
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: flex-start;
     }
 
     .collapsed-preview {
       margin-top: 16px;
       padding: 16px;
       background: var(--bg-card);
-      border-radius: 12px;
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border);
+    }
+
+    .demo-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
     }
 
     .note {
@@ -1029,24 +1204,23 @@
       margin-top: 32px;
       padding: 16px;
       background: rgba(73, 80, 87, 0.08);
-      border-radius: 8px;
+      border-radius: var(--radius-md);
       border-left: 3px solid #adb5bd;
-    }
-
-    .demo-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🎴 Scriptia 卡片设计系统</h1>
-    <p class="subtitle">暖色调 · 点击翻转 · 统一控制</p>
+    <!-- ============================================
+         Page Header
+         ============================================ -->
+    <h1 class="page-title">🎴 Scriptia 卡片设计系统</h1>
+    <p class="page-subtitle">简洁白灰版 · 点击翻转 · 统一控制</p>
 
-    <!-- 基础卡片样式 -->
-    <div class="section">
+    <!-- ============================================
+         Section 1: Base Card Styles
+         ============================================ -->
+    <section class="section">
       <h2 class="section-title">🎨 基础卡片样式</h2>
       <p class="section-desc">9:16 人物卡与 16:9 场景卡，均支持点击翻转</p>
       <div class="card-showcase">
@@ -1061,13 +1235,10 @@
                 <div class="image-area">
                   <div class="placeholder-img ip">🎭</div>
                   <span class="type-badge bg-ip">IP角色</span>
-
-                  <!-- 右上角控制按钮 -->
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-1', event)" title="翻转">↻</button>
                     <button class="control-btn" onclick="showDetail('IP角色', event)" title="详情">⋮</button>
                   </div>
-
                   <div class="content-overlay">
                     <h3 class="card-name">毒舌测评博主 · 小李</h3>
                     <p class="card-desc">专业测评博主，擅长数码产品评测...</p>
@@ -1084,6 +1255,7 @@
                   <div class="placeholder-img ip" style="font-size: 80px;">🎭</div>
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-1', event)" title="翻转">↺</button>
+                    <button class="control-btn" onclick="showDetail('IP角色', event)" title="详情">⋮</button>
                   </div>
                   <div class="scene-context-overlay" style="padding: 30px 12px 12px;">
                     <div class="scene-context-title">全身立绘</div>
@@ -1104,12 +1276,10 @@
                 <div class="image-area">
                   <div class="placeholder-img scene">🏙️</div>
                   <span class="type-badge bg-scene">场景</span>
-
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-2', event)" title="翻转">↻</button>
                     <button class="control-btn" onclick="showDetail('场景', event)" title="详情">⋮</button>
                   </div>
-
                   <div class="content-overlay">
                     <h3 class="card-name">赛博朋克都市夜景</h3>
                     <p class="card-desc">霓虹灯闪烁的未来城市街道...</p>
@@ -1125,6 +1295,7 @@
                   <div class="placeholder-img scene" style="font-size: 80px;">🏙️</div>
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-2', event)" title="翻转">↺</button>
+                    <button class="control-btn" onclick="showDetail('场景', event)" title="详情">⋮</button>
                   </div>
                   <div class="scene-context-overlay" style="padding: 30px 12px 12px;">
                     <div class="scene-context-title">场景全景</div>
@@ -1136,17 +1307,15 @@
           </div>
         </div>
 
-        <!-- 16:9 剧情卡（带翻转） -->
+        <!-- 16:9 剧情卡 -->
         <div class="demo-item">
           <p class="demo-label">16:9 场景卡 · 剧情（点击翻转）</p>
           <div class="card-scene-wrapper" id="card-3">
             <div class="card-scene-inner">
-              <!-- 正面 - 上图下文 -->
               <div class="card-scene-front">
                 <div class="image-area">
                   <div class="placeholder-img plot">🎬</div>
                   <span class="type-badge bg-plot">剧情</span>
-
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-3', event)" title="翻转">↻</button>
                     <button class="control-btn" onclick="showDetail('剧情', event)" title="详情">⋮</button>
@@ -1162,12 +1331,12 @@
                   </div>
                 </div>
               </div>
-              <!-- 背面 - 剧中场景图 -->
               <div class="card-scene-back">
                 <div class="scene-image-full">
                   <div class="placeholder-img scene-context">📦</div>
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-3', event)" title="翻转">↺</button>
+                    <button class="control-btn" onclick="showDetail('剧情', event)" title="详情">⋮</button>
                   </div>
                   <div class="scene-context-overlay">
                     <div class="scene-context-title">剧中场景：神秘包裹</div>
@@ -1179,7 +1348,7 @@
           </div>
         </div>
 
-        <!-- 16:9 梗指南卡（带翻转） -->
+        <!-- 16:9 梗指南卡 -->
         <div class="demo-item">
           <p class="demo-label">16:9 场景卡 · 梗指南（点击翻转）</p>
           <div class="card-scene-wrapper" id="card-4">
@@ -1188,7 +1357,6 @@
                 <div class="image-area">
                   <div class="placeholder-img meme">🚀</div>
                   <span class="type-badge bg-meme">梗指南</span>
-
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-4', event)" title="翻转">↻</button>
                     <button class="control-btn" onclick="showDetail('梗指南', event)" title="详情">⋮</button>
@@ -1204,12 +1372,12 @@
                   </div>
                 </div>
               </div>
-              <!-- 背面 - 梗图示例 -->
               <div class="card-scene-back">
                 <div class="scene-image-full">
                   <div class="placeholder-img scene-context" style="background: linear-gradient(135deg, #4a044e, #2e0535);">😴</div>
                   <div class="card-controls">
                     <button class="control-btn" onclick="flipCard('card-4', event)" title="翻转">↺</button>
+                    <button class="control-btn" onclick="showDetail('梗指南', event)" title="详情">⋮</button>
                   </div>
                   <div class="scene-context-overlay">
                     <div class="scene-context-title">梗图示例</div>
@@ -1222,10 +1390,12 @@
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <!-- 四种图式展示 -->
-    <div class="section">
+    <!-- ============================================
+         Section 2: Four Display Patterns
+         ============================================ -->
+    <section class="section">
       <h2 class="section-title">📋 四种图式展示</h2>
       <p class="section-desc">折叠样式 / 输入框引用 / 对话消息 / 弹窗详情</p>
 
@@ -1235,33 +1405,101 @@
           <!-- 折叠样式 -->
           <div style="margin-bottom: 24px;">
             <p class="demo-label">1. 折叠样式（表格单行）</p>
-            <div class="card-collapsed">
-              <div class="mini-icon bg-ip">🎭</div>
-              <div class="mini-info">
-                <div class="mini-title">毒舌测评博主 · 小李</div>
-                <div class="mini-type">IP角色 · 测评/数码</div>
+            <div class="card-collapsed-wrapper" id="collapsed-1">
+              <div class="card-collapsed" onclick="toggleCollapse('collapsed-1', event)">
+                <div class="mini-icon bg-ip">🎭</div>
+                <div class="mini-info">
+                  <div class="mini-title">毒舌测评博主 · 小李</div>
+                  <div class="mini-type">IP角色 · 测评/数码</div>
+                </div>
+                <button class="expand-btn" onclick="event.stopPropagation(); toggleCollapse('collapsed-1', event);" data-action="toggle">展开</button>
               </div>
-              <button class="expand-btn">展开</button>
+              <div class="card-collapsed-expand">
+                <div class="expand-fields">
+                  <div class="expand-field">
+                    <span class="expand-field-label">口头禅：</span>
+                    <span class="expand-field-value">"这玩意儿值不值？"</span>
+                  </div>
+                  <div class="expand-field">
+                    <span class="expand-field-label">擅长领域：</span>
+                    <span class="expand-field-value">3C数码、生活用品</span>
+                  </div>
+                </div>
+                <div class="expand-tags">
+                  <span class="expand-tag">测评</span>
+                  <span class="expand-tag">数码</span>
+                  <span class="expand-tag">生活</span>
+                </div>
+                <div class="expand-actions">
+                  <button class="btn-text btn-secondary" onclick="quoteCard('IP角色', event)">引用</button>
+                  <button class="btn-text btn-primary" onclick="editCard('card-1', event)">编辑</button>
+                </div>
+              </div>
             </div>
 
             <div class="collapsed-preview">
               <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">折叠状态预览（多行）</p>
               <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div class="card-collapsed" style="min-width: auto;">
-                  <div class="mini-icon bg-plot">🎬</div>
-                  <div class="mini-info">
-                    <div class="mini-title">悬疑开箱剧情</div>
-                    <div class="mini-type">剧情 · 30秒</div>
+                <div class="card-collapsed-wrapper" id="collapsed-2">
+                  <div class="card-collapsed" onclick="toggleCollapse('collapsed-2', event)">
+                    <div class="mini-icon bg-plot">🎬</div>
+                    <div class="mini-info">
+                      <div class="mini-title">悬疑开箱剧情</div>
+                      <div class="mini-type">剧情 · 30秒</div>
+                    </div>
+                    <button class="expand-btn" onclick="event.stopPropagation(); toggleCollapse('collapsed-2', event);" data-action="toggle">展开</button>
                   </div>
-                  <button class="expand-btn">展开</button>
+                  <div class="card-collapsed-expand">
+                    <div class="expand-fields">
+                      <div class="expand-field">
+                        <span class="expand-field-label">剧情类型：</span>
+                        <span class="expand-field-value">悬疑/惊悚</span>
+                      </div>
+                      <div class="expand-field">
+                        <span class="expand-field-label">预计时长：</span>
+                        <span class="expand-field-value">30秒</span>
+                      </div>
+                    </div>
+                    <div class="expand-tags">
+                      <span class="expand-tag">悬疑</span>
+                      <span class="expand-tag">开箱</span>
+                    </div>
+                    <div class="expand-actions">
+                      <button class="btn-text btn-secondary" onclick="quoteCard('剧情', event)">引用</button>
+                      <button class="btn-text btn-primary" onclick="editCard('card-plot-1', event)">编辑</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-collapsed" style="min-width: auto;">
-                  <div class="mini-icon bg-scene">🏙️</div>
-                  <div class="mini-info">
-                    <div class="mini-title">赛博朋克都市夜景</div>
-                    <div class="mini-type">场景 · 科幻/夜景</div>
+                <div class="card-collapsed-wrapper" id="collapsed-3">
+                  <div class="card-collapsed" onclick="toggleCollapse('collapsed-3', event)">
+                    <div class="mini-icon bg-scene">🏙️</div>
+                    <div class="mini-info">
+                      <div class="mini-title">赛博朋克都市夜景</div>
+                      <div class="mini-type">场景 · 科幻/夜景</div>
+                    </div>
+                    <button class="expand-btn" onclick="event.stopPropagation(); toggleCollapse('collapsed-3', event);" data-action="toggle">展开</button>
                   </div>
-                  <button class="expand-btn">展开</button>
+                  <div class="card-collapsed-expand">
+                    <div class="expand-fields">
+                      <div class="expand-field">
+                        <span class="expand-field-label">场景氛围：</span>
+                        <span class="expand-field-value">霓虹闪烁、科技感</span>
+                      </div>
+                      <div class="expand-field">
+                        <span class="expand-field-label">适用时段：</span>
+                        <span class="expand-field-value">夜晚</span>
+                      </div>
+                    </div>
+                    <div class="expand-tags">
+                      <span class="expand-tag">科幻</span>
+                      <span class="expand-tag">夜景</span>
+                      <span class="expand-tag">未来</span>
+                    </div>
+                    <div class="expand-actions">
+                      <button class="btn-text btn-secondary" onclick="quoteCard('场景', event)">引用</button>
+                      <button class="btn-text btn-primary" onclick="editCard('card-scene-1', event)">编辑</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1291,6 +1529,8 @@
         <!-- 右侧：对话消息样式 -->
         <div>
           <p class="demo-label">3. 对话消息样式</p>
+
+          <!-- 消息示例 1: 1:1 头像 -->
           <div class="chat-message">
             <div class="chat-avatar">🤖</div>
             <div class="chat-content">
@@ -1300,28 +1540,93 @@
                   <div class="type-icon bg-ip">🎭</div>
                   <span class="card-title">毒舌测评博主 · 小李</span>
                   <div class="card-actions">
-                    <button class="btn-secondary">引用</button>
-                    <button class="btn-primary">查看</button>
+                    <button class="btn btn-secondary">引用</button>
+                    <button class="btn btn-primary">查看</button>
                   </div>
                 </div>
                 <div class="message-card-body">
-                  <div class="placeholder-img ip" style="height: 120px; border-radius: 6px;">🎭</div>
-                  <p class="desc">专业测评博主，擅长数码产品评测。口头禅："这玩意儿值不值？"</p>
+                  <div class="message-card-layout">
+                    <div class="layout-image ratio-1-1 placeholder-img ip">🎭</div>
+                    <div class="layout-text">毒舌测评博主 · 小李，专业数码产品评测达人</div>
+                  </div>
+                  <div class="message-card-bottom">专业测评博主，擅长数码产品评测。口头禅："这玩意儿值不值？"</div>
                 </div>
                 <div class="message-card-footer">
-                  <button class="btn-secondary">折叠</button>
-                  <button class="btn-secondary">配图</button>
-                  <button class="btn-primary">保存</button>
+                  <button class="btn btn-secondary">折叠</button>
+                  <button class="btn btn-secondary">配图</button>
+                  <button class="btn btn-primary">保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 消息示例 2: 9:16 角色图 -->
+          <div class="chat-message" style="margin-top: 16px;">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-content">
+              <div class="chat-sender">Scriptia AI</div>
+              <div class="message-card">
+                <div class="message-card-header">
+                  <div class="type-icon bg-ip">🧙</div>
+                  <span class="card-title">魔法师 · 艾琳</span>
+                  <div class="card-actions">
+                    <button class="btn btn-secondary">引用</button>
+                    <button class="btn btn-primary">查看</button>
+                  </div>
+                </div>
+                <div class="message-card-body">
+                  <div class="message-card-layout">
+                    <div class="layout-image ratio-9-16 placeholder-img ip">🧙</div>
+                    <div class="layout-text">神秘魔法师艾琳，来自精灵森林的强大法师，擅长元素魔法</div>
+                  </div>
+                  <div class="message-card-bottom">古老精灵族的后裔，掌握火、冰、雷三种元素魔法。性格冷傲但内心善良。</div>
+                </div>
+                <div class="message-card-footer">
+                  <button class="btn btn-secondary">折叠</button>
+                  <button class="btn btn-secondary">配图</button>
+                  <button class="btn btn-primary">保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 消息示例 3: 16:9 场景图 -->
+          <div class="chat-message" style="margin-top: 16px;">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-content">
+              <div class="chat-sender">Scriptia AI</div>
+              <div class="message-card">
+                <div class="message-card-header">
+                  <div class="type-icon bg-scene">🏙️</div>
+                  <span class="card-title">赛博朋克都市</span>
+                  <div class="card-actions">
+                    <button class="btn btn-secondary">引用</button>
+                    <button class="btn btn-primary">查看</button>
+                  </div>
+                </div>
+                <div class="message-card-body">
+                  <div class="message-card-layout">
+                    <div class="layout-image ratio-16-9 placeholder-img scene">🏙️</div>
+                    <div class="layout-text">霓虹闪烁的未来都市，高科技与低生活的交汇点</div>
+                  </div>
+                  <div class="message-card-bottom">2077年的夜之城，巨型全息广告牌照亮夜空，飞行汽车穿梭于摩天大楼之间。</div>
+                </div>
+                <div class="message-card-footer">
+                  <button class="btn btn-secondary">折叠</button>
+                  <button class="btn btn-secondary">配图</button>
+                  <button class="btn btn-primary">保存</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- 弹窗详情样式 -->
-    <div class="section">
+    <!-- ============================================
+         Section 3: Modal Detail
+         ============================================ -->
+    <section class="section">
       <h2 class="section-title">🎯 弹窗详情样式</h2>
       <p class="section-desc">点击卡片右上角"⋮"按钮查看完整详情</p>
 
@@ -1329,8 +1634,8 @@
         <div class="modal-header">
           <h3><span>🎭</span> 卡片详情</h3>
           <div class="modal-actions">
-            <button class="btn-secondary">引用</button>
-            <button class="btn-primary">保存</button>
+            <button class="btn btn-secondary">引用</button>
+            <button class="btn btn-primary">保存</button>
             <button class="close-btn">✕</button>
           </div>
         </div>
@@ -1389,36 +1694,41 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- 类型色板 -->
-    <div class="section">
+    <!-- ============================================
+         Section 4: Color Palette
+         ============================================ -->
+    <section class="section">
       <h2 class="section-title">🎨 类型色板</h2>
       <p class="section-desc">四种卡片类型的颜色规范</p>
       <div style="display: flex; gap: 16px;">
         <div style="text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #e8590c, #c2410c); display: flex; align-items: center; justify-content: center; font-size: 32px;">🎭</div>
+          <div style="width: 80px; height: 80px; border-radius: var(--radius-2xl); background: linear-gradient(135deg, #e8590c, #c2410c); display: flex; align-items: center; justify-content: center; font-size: 32px;">🎭</div>
           <div style="font-size: 13px; font-weight: 600; margin-top: 8px; color: #212529;">IP角色</div>
           <div style="font-size: 11px; color: #e8590c;">#e8590c</div>
         </div>
         <div style="text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #2f9e44, #2b8a3e); display: flex; align-items: center; justify-content: center; font-size: 32px;">🏙️</div>
+          <div style="width: 80px; height: 80px; border-radius: var(--radius-2xl); background: linear-gradient(135deg, #2f9e44, #2b8a3e); display: flex; align-items: center; justify-content: center; font-size: 32px;">🏙️</div>
           <div style="font-size: 13px; font-weight: 600; margin-top: 8px; color: #212529;">场景</div>
           <div style="font-size: 11px; color: #2f9e44;">#2f9e44</div>
         </div>
         <div style="text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #1971c2, #1864ab); display: flex; align-items: center; justify-content: center; font-size: 32px;">🎬</div>
+          <div style="width: 80px; height: 80px; border-radius: var(--radius-2xl); background: linear-gradient(135deg, #1971c2, #1864ab); display: flex; align-items: center; justify-content: center; font-size: 32px;">🎬</div>
           <div style="font-size: 13px; font-weight: 600; margin-top: 8px; color: #212529;">剧情</div>
           <div style="font-size: 11px; color: #1971c2;">#1971c2</div>
         </div>
         <div style="text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #be4bdb, #9c36b5); display: flex; align-items: center; justify-content: center; font-size: 32px;">🚀</div>
+          <div style="width: 80px; height: 80px; border-radius: var(--radius-2xl); background: linear-gradient(135deg, #be4bdb, #9c36b5); display: flex; align-items: center; justify-content: center; font-size: 32px;">🚀</div>
           <div style="font-size: 13px; font-weight: 600; margin-top: 8px; color: #212529;">梗指南</div>
           <div style="font-size: 11px; color: #be4bdb;">#be4bdb</div>
         </div>
       </div>
-    </div>
+    </section>
 
+    <!-- ============================================
+         Footer Note
+         ============================================ -->
     <div class="note">
       <strong>💡 交互说明：</strong>
       <br>• 点击卡片右上角 ↻ 按钮翻转卡片，查看背面图片（16:9卡片背面显示剧中场景/情节图）
@@ -1428,8 +1738,15 @@
 
   </div>
 
+  <!-- ============================================
+       JavaScript
+       ============================================ -->
   <script>
-    // 翻转卡片
+    /**
+     * 翻转卡片
+     * @param {string} cardId - 卡片容器ID
+     * @param {Event} event - 点击事件
+     */
     function flipCard(cardId, event) {
       if (event) {
         event.preventDefault();
@@ -1444,12 +1761,58 @@
       return false;
     }
 
-    // 显示详情
+    /**
+     * 显示卡片详情
+     * @param {string} cardType - 卡片类型
+     * @param {Event} event - 点击事件
+     */
     function showDetail(cardType, event) {
       event.stopPropagation();
       alert(`查看 ${cardType} 卡片详情（实际应用中会打开详情弹窗）`);
     }
 
+    /**
+     * 切换折叠/展开状态
+     * @param {string} wrapperId - 折叠容器ID
+     * @param {Event} event - 点击事件
+     */
+    function toggleCollapse(wrapperId, event) {
+      if (event) {
+        event.stopPropagation();
+      }
+      const wrapper = document.getElementById(wrapperId);
+      if (wrapper) {
+        const isExpanded = wrapper.classList.toggle('expanded');
+        const btn = wrapper.querySelector('.expand-btn');
+        if (btn) {
+          btn.textContent = isExpanded ? '收起' : '展开';
+        }
+        console.log('Toggle collapse:', wrapperId, isExpanded ? 'expanded' : 'collapsed');
+      }
+      return false;
+    }
+
+    /**
+     * 引用卡片到输入框
+     * @param {string} cardType - 卡片类型
+     * @param {Event} event - 点击事件
+     */
+    function quoteCard(cardType, event) {
+      event.stopPropagation();
+      alert(`引用 ${cardType} 卡片到输入框`);
+      console.log('Quote card:', cardType);
+    }
+
+    /**
+     * 编辑卡片
+     * @param {string} cardId - 卡片ID
+     * @param {Event} event - 点击事件
+     */
+    function editCard(cardId, event) {
+      event.stopPropagation();
+      alert(`编辑卡片 ${cardId}（实际应用中会打开编辑弹窗）`);
+      console.log('Edit card:', cardId);
+    }
   </script>
 </body>
 </html>
