@@ -1,0 +1,164 @@
+/* ============================================
+   Button Components - 优化风格适配页面
+   ============================================ */
+
+/* Base Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary Button - 使用与页面按钮一致的渐变 */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+  color: #374151;
+  transform: translateY(-1px);
+}
+
+/* Text Button (Small) */
+.btn-text {
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-text.btn-secondary {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.btn-text.btn-secondary:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.btn-text.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+.btn-text.btn-primary:hover {
+  background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-text:active {
+  transform: scale(0.97);
+}
+
+/* Control Button (Card Corner) - 后备样式，实际样式在 RatioCard.css 中定义 */
+.control-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.control-btn:hover {
+  background: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  color: #111827;
+}
+
+.control-btn:active {
+  transform: scale(0.98);
+}
+
+/* Close Button */
+.close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.close-btn:active {
+  transform: scale(0.97);
+}
+
+/* Expand Button */
+.expand-btn {
+  height: 32px;
+  padding: 0 14px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.expand-btn:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.expand-btn:active {
+  transform: scale(0.97);
+}

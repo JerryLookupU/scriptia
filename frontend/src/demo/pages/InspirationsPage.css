@@ -1,0 +1,178 @@
+/* Inspirations Page - Chat 风格布局 */
+
+.inspirations-chat-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 欢迎消息 */
+.welcome-message {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.message-avatar {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.message-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.message-sender {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.message-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  border-top-left-radius: 4px;
+  padding: 1.25rem;
+}
+
+.message-bubble h1 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.message-bubble p {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--border-default);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.quick-action-btn span {
+  font-size: 1rem;
+}
+
+/* 功能提示 */
+.feature-tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.tip-card {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.tip-card:hover {
+  border-color: var(--border-default);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tip-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+  font-size: 1.25rem;
+}
+
+.tip-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.tip-content h4 {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.tip-content p {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* 生成的卡片展示区 */
+.generated-cards {
+  margin-top: 1rem;
+}
+
+.section-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-lg);
+  min-height: 120px;
+}
+
+.empty-hint {
+  width: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  padding: 2rem;
+}
